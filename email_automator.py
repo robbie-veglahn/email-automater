@@ -8,11 +8,21 @@ load_dotenv(".env")
 SENDER = os.environ.get("GMAIL_USER")
 PASSWORD = os.environ.get("GMAIL_PASSWORD")
 
-def send_email(recipient, subject, body):
+def send_email(recipients, subject, body):
+    """
+    send_email takes in recipients, a subject, and a body, and sends the ...
+    email using smtplib
+    """
     msg = EmailMessage()
     msg.set_content(body)
     msg["Subject"] = subject
     msg["From"] = SENDER
+    if len(recipients) == 1:
+        recipient = recipients[0]
+        print(recipient)
+    else:
+        recipient = ", ".join(recipients)
+        print(recipient)
     msg["To"] = recipient
     sent_successfully = False
     try:
